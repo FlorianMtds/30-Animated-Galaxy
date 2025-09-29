@@ -3,6 +3,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import GUI from 'lil-gui'
 import galaxyVertexShader from './shaders/galaxy/vertex.glsl'
 import galaxyFragmentShader from './shaders/galaxy/fragment.glsl'
+import { element } from 'three/tsl'
 
 /**
  * Base
@@ -98,6 +99,7 @@ const generateGalaxy = () =>
 
         uniforms:
         {
+            uTime: { value:  0 },
             uSize: { value: 15 * renderer.getPixelRatio() }
         },
 
@@ -182,6 +184,9 @@ const clock = new THREE.Clock()
 const tick = () =>
 {
     const elapsedTime = clock.getElapsedTime()
+
+    // Update material
+    material.uniforms.uTime.value = elapsedTime
 
     // Update controls
     controls.update()
